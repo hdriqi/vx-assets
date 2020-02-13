@@ -65,9 +65,7 @@ const authVerifyClientMiddleware = async (req, res, next) => {
 }
 
 //POST method route for uploading file
-app.post('/upload', authVerifyClientMiddleware, authVerifyTokenMiddleware, upload.single('demo_file'), function(req, res) {
-  //Multer middleware adds file(in case of single file ) or files(multiple files) object to the request object.
-  //req.file is the demo_file
+app.post('/upload', authVerifyClientMiddleware, authVerifyTokenMiddleware, upload.single('file'), function(req, res) {
   uploadFile(req.file.path, req.file.filename, req.file.mimetype, res)
 })
 
@@ -104,7 +102,8 @@ async function uploadFile(source, targetName, mime, res) {
       return res.json({
         status: 'success',
         data: {
-          filename: targetName
+          filename: targetName,
+          url: `${process.env.BASE_URL}/${targetName}`
         }
       })
     })
