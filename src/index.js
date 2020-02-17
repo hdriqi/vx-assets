@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const express = require('express')
+const cors = require('cors')
 const multer = require('multer')
 const shortid = require('shortid')
 const AWS = require('aws-sdk')
@@ -11,6 +12,8 @@ const worker = new Worker()
 worker.init()
 
 const app = express()
+
+app.use(cors())
 
 // configuring the DiscStorage engine.
 const storage = multer.diskStorage({
